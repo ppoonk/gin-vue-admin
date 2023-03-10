@@ -1,13 +1,11 @@
 package main
 
 import (
-	"fmt"
 	"go-admin/global"
 	"go-admin/initialize"
 )
 
 func main() {
-	fmt.Println("main开始>>>>>>")
 	// conf.Init()
 	// dao.SystemInit()
 	// router.NewRouter()
