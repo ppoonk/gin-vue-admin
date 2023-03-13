@@ -2,6 +2,7 @@ package global
 
 import (
 	"go-admin/config"
+	"sync"
 	"time"
 
 	"github.com/go-redis/redis/v8"
@@ -12,8 +13,8 @@ import (
 )
 
 var (
-	GVA_DB *gorm.DB
-	//	GVA_DBList map[string]*gorm.DB
+	GVA_DB     *gorm.DB
+	GVA_DBList map[string]*gorm.DB
 	GVA_REDIS  *redis.Client
 	GVA_CONFIG config.Server
 	GVA_VP     *viper.Viper
@@ -23,7 +24,7 @@ var (
 	GVA_Concurrency_Control = &singleflight.Group{}
 
 	BlackCache local_cache.Cache
-	//lock       sync.RWMutex
+	lock       sync.RWMutex
 )
 
 type GVA_MODEL struct {
@@ -33,20 +34,20 @@ type GVA_MODEL struct {
 	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"` // 删除时间
 }
 
-// // GetGlobalDBByDBName 通过名称获取db list中的db
-// func GetGlobalDBByDBName(dbname string) *gorm.DB {
-// 	lock.RLock()
-// 	defer lock.RUnlock()
-// 	return GVA_DBList[dbname]
-// }
+// GetGlobalDBByDBName 通过名称获取db list中的db
+func GetGlobalDBByDBName(dbname string) *gorm.DB {
+	lock.RLock()
+	defer lock.RUnlock()
+	return GVA_DBList[dbname]
+}
 
-// // MustGetGlobalDBByDBName 通过名称获取db 如果不存在则panic
-// func MustGetGlobalDBByDBName(dbname string) *gorm.DB {
-// 	lock.RLock()
-// 	defer lock.RUnlock()
-// 	db, ok := GVA_DBList[dbname]
-// 	if !ok || db == nil {
-// 		panic("db no init")
-// 	}
-// 	return db
-// }
+// MustGetGlobalDBByDBName 通过名称获取db 如果不存在则panic
+func MustGetGlobalDBByDBName(dbname string) *gorm.DB {
+	lock.RLock()
+	defer lock.RUnlock()
+	db, ok := GVA_DBList[dbname]
+	if !ok || db == nil {
+		panic("db no init")
+	}
+	return db
+}

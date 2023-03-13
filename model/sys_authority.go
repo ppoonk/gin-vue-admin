@@ -21,3 +21,12 @@ type SysAuthority struct {
 func (SysAuthority) TableName() string {
 	return "sys_authorities"
 }
+
+type SysAuthorityResponse struct {
+	Authority SysAuthority `json:"authority"`
+}
+
+type SysAuthorityCopyResponse struct {
+	Authority      SysAuthority `json:"authority"`
+	OldAuthorityId uint         `json:"oldAuthorityId"` // 旧角色ID
+}

@@ -17,9 +17,12 @@ func InitRouter() {
 
 	RouterV1Group := Router.Group("/")
 
-	router.InitBaseRouter(RouterV1Group) //初始化base路由
-	router.InitMenuRouter(RouterV1Group) //初始化menu路由
-	router.InitUserRouter(RouterV1Group) //初始化user路由
+	router.InitBaseRouter(RouterV1Group)      //初始化base路由
+	router.InitMenuRouter(RouterV1Group)      //初始化menu路由
+	router.InitUserRouter(RouterV1Group)      //初始化user路由
+	router.InitApiRouter(RouterV1Group)       //初始化Api路由
+	router.InitAuthorityRouter(RouterV1Group) //初始化Authority路由
+	router.InitJwtRouter(RouterV1Group)       //初始化Jwt路由
 
 	Router.Run(":8888")
 }
