@@ -6,9 +6,6 @@ import (
 )
 
 func main() {
-	// conf.Init()
-	// dao.SystemInit()
-	// router.NewRouter()
 	global.GVA_VP = initialize.InitViper() // 初始化Viper
 	global.GVA_DB = initialize.Gorm()      // gorm连接数据库
 	initialize.OtherInit()                 //初始global.BlackCache
